@@ -1,20 +1,19 @@
 import React from 'react'
 import welcome2 from "./../assets/welcome2.jpg"
 import studyZone from "./../assets/studyZone.jpg"
+import { useNavigate } from 'react-router'
 
 export default function Login() {
+  const navigate=useNavigate();
+
   return (
-    <div className="h-screen w-screen flex flex-row justify-evenly ">
+    <div className="h-full w-full flex flex-row justify-evenly max-h-screen">
       <div className="justify-center items-center w-[50%] h-full">
         <img src={welcome2} className='h-full w-full' />
       </div>
-      <div className="flex flex-col w-[50%] bg-gray-50 h-full justify-center items-center ">
-        {/* <div className='justify-center items-center p-[4%]'> */}
-        <div className='flex flex-col rounded-lg border-violet-400 px-[8%] py-[10%]  shadow-2xl w-full h-full'>
 
-          {/* <div className='flex justify-center'>
-              <img src={studyZone} className='fill-gray-50 h-44 w-44' />
-            </div> */}
+      <div className="flex flex-col w-[50%] h-full justify-center items-center bg-gray-50 ">
+        <div className='w-full h-full flex flex-col rounded-lg px-[8%] py-[10%] shadow-2xl'>
 
           <div className='justify-center items-center flex flex-col px-8'>
             <h1 class="animate-text mb-[4%] bg-gradient-to-tr from-blue-700 via-purple-500 to-orange-500 bg-clip-text text-5xl font-black text-transparent whitespace-nowrap">Welcome to Study Zone</h1>
@@ -23,7 +22,6 @@ export default function Login() {
           <div className='mt-[4%]'>
             <p className="text-center text-6xl text-violet-500">Learn Online</p>
             <p className="text-center">Online teaching made simple and powerful</p>
-
           </div>
 
           <div className='flex mt-10  '>
@@ -69,15 +67,15 @@ export default function Login() {
                 </button>
               </div>
               <div class="flex gap-2 pt-5 justify-center items-center">
-                <p class="text-gray-600 text-sm">Don't have an account?</p><a class="text-gray-600 text-sm underline"
-                  href="/singup">Register here</a>
+                <p class="text-gray-600 text-sm">Don't have an account?</p><p class="text-gray-600 text-sm underline"
+                   onClick={()=>{
+                    navigate("../singup")
+                  }}>Register here</p>
               </div>
             </form>
           </div>
 
         </div>
-        {/* </div> */}
-
       </div>
     </div>
   )
