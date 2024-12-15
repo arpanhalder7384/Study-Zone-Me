@@ -57,45 +57,23 @@ export default function SmartTextAreaWithSpeech({ onSend }) {
     };
 
     return (
-        <div className=" w-[90%] ml-10 my-10">
+        <div className="relative flex justify-center items-center">
             {/* <!-- Textarea --> */}
             <div class="relative">
                 <textarea
                     id="hs-textarea-ex-1"
-                    class="p-4 pb-20 block w-full min-h-40 border-gray-200  text-sm focus:border-blue-500 border-2 border-black focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none "
+                    class="p-4 pb-20 block w-full min-h-40 border-gray-200  text-sm focus:border-blue-500 border-2 focus:ring-blue-500 rounded-lg "
                     placeholder="Ask me anything..."
                     value={text}
-                    onChange={handleInputChange}
+                    onChange={(e)=>handleInputChange(e)}
                 ></textarea>
 
                 {/* <!-- Toolbar --> */}
                 <div class="absolute bottom-px inset-x-px p-2 rounded-b-md bg-white mx-1 my-0.5">
                     <div class="flex justify-between items-center">
-                        {/* <!-- Button Group --> */}
+                    
+                        {/* <!--Left Side Button Group --> */}
                         <div class="flex items-center">
-                            {/* <!-- Mic Button --> */}
-                            <button
-                                type="button"
-                                class="inline-flex flex-shrink-0 justify-center items-center size-8 rounded-lg text-gray-500 hover:text-blue-600 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-neutral-500 dark:hover:text-blue-500"
-                            >
-                                <svg
-                                    class="flex-shrink-0 size-4"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                >
-                                    <rect width="18" height="18" x="3" y="3" rx="2"></rect>
-                                    <line x1="9" x2="15" y1="15" y2="9"></line>
-                                </svg>
-                            </button>
-                            {/* <!-- End Mic Button --> */}
-
                             {/* <!-- Attach Button --> */}
                             <button
                                 type="button"
@@ -119,20 +97,18 @@ export default function SmartTextAreaWithSpeech({ onSend }) {
                             </button>
                             {/* <!-- End Attach Button --> */}
                         </div>
-                        {/* <!-- End Button Group --> */}
 
-                        {/* <!-- Button Group --> */}
+                        {/* <!--Right Side Button Group --> */}
                         <div class="flex items-center gap-x-1">
                             {/* <!-- Mic Button --> */}
                             <button
                                 type="button"
-                                class="inline-flex flex-shrink-0 justify-center items-center size-8 rounded-lg text-gray-500 hover:text-blue-600 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-neutral-500 dark:hover:text-blue-500"
-                                onClick={() => {
-                                    handleRecord();
-                                }}
+                                class={`flex justify-center items-center size-8 + ${isRecording ? "text-red-400 cursor-not-allowed" : "text-gray-500"}`}
+                                onClick={() => handleRecord()}
+                                disabled={isRecording}
                             >
                                 <svg
-                                    class="flex-shrink-0 size-4"
+                                    class="size-4"
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="24"
                                     height="24"
@@ -153,9 +129,9 @@ export default function SmartTextAreaWithSpeech({ onSend }) {
                             {/* <!-- Send Button --> */}
                             <button
                                 type="button"
-                                class="inline-flex flex-shrink-0 justify-center items-center size-8 rounded-lg text-white bg-blue-600 hover:bg-blue-500 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                onClick={handleSend}
-                                disabled={!text.trim()}
+                                class={`flex justify-center items-center size-8 rounded-lg text-white + ${text.length === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-blue-500 cursor-pointer"}`}
+                                onClick={()=>handleSend()}
+                                disabled={text.trim().length===0}
                             >
                                 <svg
                                     class="flex-shrink-0 size-3.5"
