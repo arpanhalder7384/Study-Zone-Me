@@ -9,8 +9,10 @@ export default function About() {
       </header>
 
       <main>
-        <div className='mt-8'>
-          <SmartTextAreaWithSpeech onSend={(text) => console.log(text)} />
+        <div className='mt-8 flex w-full justify-center'>
+          <SmartTextAreaWithSpeech
+            onSend={(text) => console.log(text)}
+            customStyles="w-[100%] p-4" />
         </div>
       </main>
 

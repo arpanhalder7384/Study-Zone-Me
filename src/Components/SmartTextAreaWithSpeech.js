@@ -3,7 +3,7 @@ import SpeechRecognition, {
     useSpeechRecognition,
 } from "react-speech-recognition";
 
-export default function SmartTextAreaWithSpeech({ onSend }) {
+export default function SmartTextAreaWithSpeech({ onSend, customStyles }) {
     let [text, setText] = useState("");
     const { transcript, interimTranscript, listening, resetTranscript } = useSpeechRecognition();
     const [isRecording, setIsRecording] = useState(false);
@@ -13,7 +13,6 @@ export default function SmartTextAreaWithSpeech({ onSend }) {
     useEffect(() => {
         const combinedTranscript = transcript || interimTranscript;
         setText(combinedTranscript);
-        console.log(transcript)
 
         // Clear timeout if interim transcript updates
         if (listening && interimTranscript !== lastTranscriptRef.current && isRecording) {
@@ -27,13 +26,18 @@ export default function SmartTextAreaWithSpeech({ onSend }) {
                     setText("");
                     SpeechRecognition.stopListening();
                     setIsRecording(false);
-                    handleRecord();
                 }
             }, 1200);
 
             lastTranscriptRef.current = interimTranscript;
         }
     }, [transcript, interimTranscript, listening, resetTranscript]);
+
+    useEffect(()=>{
+        if(!listening){
+            setIsRecording(false)
+        }
+    },[listening])
 
     const handleRecord = () => {
         if (isRecording) {
@@ -57,21 +61,21 @@ export default function SmartTextAreaWithSpeech({ onSend }) {
     };
 
     return (
-        <div className="relative flex justify-center items-center">
+        <div className={"relative flex justify-center items-center " + customStyles}>
             {/* <!-- Textarea --> */}
-            <div class="relative">
+            <div class="relative w-full">
                 <textarea
                     id="hs-textarea-ex-1"
                     class="p-4 pb-20 block w-full min-h-40 border-gray-200  text-sm focus:border-blue-500 border-2 focus:ring-blue-500 rounded-lg "
                     placeholder="Ask me anything..."
                     value={text}
-                    onChange={(e)=>handleInputChange(e)}
+                    onChange={(e) => handleInputChange(e)}
                 ></textarea>
 
                 {/* <!-- Toolbar --> */}
                 <div class="absolute bottom-px inset-x-px p-2 rounded-b-md bg-white mx-1 my-0.5">
                     <div class="flex justify-between items-center">
-                    
+
                         {/* <!--Left Side Button Group --> */}
                         <div class="flex items-center">
                             {/* <!-- Attach Button --> */}
@@ -130,8 +134,8 @@ export default function SmartTextAreaWithSpeech({ onSend }) {
                             <button
                                 type="button"
                                 class={`flex justify-center items-center size-8 rounded-lg text-white + ${text.length === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-blue-500 cursor-pointer"}`}
-                                onClick={()=>handleSend()}
-                                disabled={text.trim().length===0}
+                                onClick={() => handleSend()}
+                                disabled={text.trim().length === 0}
                             >
                                 <svg
                                     class="flex-shrink-0 size-3.5"
